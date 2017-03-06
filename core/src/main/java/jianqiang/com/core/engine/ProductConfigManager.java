@@ -18,35 +18,42 @@ public class ProductConfigManager {
 		configList = new HashMap<String, Boolean>();
 		mapList = new HashMap<String, String>();
 
+		getConfig(R.xml.feature_config_default);
+		getConfig(R.xml.feature_config);
+	}
+
+	static void getConfig(int xmlResourceId) {
+
 		String name = null;
 		String map = null;
 
 		final XmlResourceParser xmlParser = GlobalApplication.getContextObject()
-				.getResources().getXml(R.xml.feature_config);
+				.getResources().getXml(xmlResourceId);
 
 		int eventCode;
 		try {
 			eventCode = xmlParser.getEventType();
 			while (eventCode != XmlPullParser.END_DOCUMENT) {
 				switch (eventCode) {
-				case XmlPullParser.START_DOCUMENT:
-					break;
-				case XmlPullParser.START_TAG:
-					if ("Page".equals(xmlParser.getName())) {
-						name = xmlParser.getAttributeValue(null, "name");
-						map = xmlParser.getAttributeValue(null, "map");
-						mapList.put(name, map);
-					} else if("Node".equals(xmlParser.getName())) {
-						final String key = xmlParser.getAttributeValue(null, "key");
-						final String value = xmlParser.getAttributeValue(null, "value");
+					case XmlPullParser.START_DOCUMENT:
+						break;
+					case XmlPullParser.START_TAG:
+						if ("Page".equals(xmlParser.getName())) {
+							name = xmlParser.getAttributeValue(null, "name");
+							map = xmlParser.getAttributeValue(null, "map");
 
-						configList.put(name + key, new Boolean(value));
-					}
-					break;
-				case XmlPullParser.END_TAG:
-					break;
-				default:
-					break;
+							mapList.put(name, map);
+						} else if("Node".equals(xmlParser.getName())) {
+							final String key = xmlParser.getAttributeValue(null, "key");
+							final String value = xmlParser.getAttributeValue(null, "value");
+
+							configList.put(name + key, new Boolean(value));
+						}
+						break;
+					case XmlPullParser.END_TAG:
+						break;
+					default:
+						break;
 				}
 				eventCode = xmlParser.next();
 			}
