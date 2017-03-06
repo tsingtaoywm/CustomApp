@@ -12,6 +12,7 @@
         </activity>
 
         <activity android:name="jianqiang.com.core.Scenario1Activity" />
+        <activity android:name="jianqiang.com.core.Scenario2Activity" />
 
 
         <activity android:name="jianqiang.com.core.L1Activity" />

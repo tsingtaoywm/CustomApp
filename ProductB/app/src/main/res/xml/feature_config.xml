@@ -3,5 +3,10 @@
     <Page name="Scenario1Activity">
         <Node key="show_button1" value="true" />
     </Page>
+    <Page name="Scenario2Activity"
+        map="jianqiang.com.productb.Scenario2Activity_new"
+        map2="jianqiang.com.productb.Scenario2Activity2">
+        <Node key="show_button" value="true" />
+    </Page>
 </config>
 

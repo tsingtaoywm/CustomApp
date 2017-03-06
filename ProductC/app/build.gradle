@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            java {
+                //不复制这个目录下的内容，会引起编译错误
+                exclude 'jianqiang/com/core'
+            }
+        }
+    }
 }
 
 dependencies {

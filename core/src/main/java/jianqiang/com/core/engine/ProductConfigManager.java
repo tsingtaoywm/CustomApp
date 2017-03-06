@@ -12,11 +12,14 @@ import jianqiang.com.core.R;
 
 public class ProductConfigManager {
 	private static HashMap<String, Boolean> configList;
+	private static HashMap<String, String> mapList;
 
 	public static void fetchConfigDataFromXml() {
 		configList = new HashMap<String, Boolean>();
+		mapList = new HashMap<String, String>();
 
 		String name = null;
+		String map = null;
 
 		final XmlResourceParser xmlParser = GlobalApplication.getContextObject()
 				.getResources().getXml(R.xml.feature_config);
@@ -31,6 +34,8 @@ public class ProductConfigManager {
 				case XmlPullParser.START_TAG:
 					if ("Page".equals(xmlParser.getName())) {
 						name = xmlParser.getAttributeValue(null, "name");
+						map = xmlParser.getAttributeValue(null, "map");
+						mapList.put(name, map);
 					} else if("Node".equals(xmlParser.getName())) {
 						final String key = xmlParser.getAttributeValue(null, "key");
 						final String value = xmlParser.getAttributeValue(null, "value");
@@ -60,5 +65,13 @@ public class ProductConfigManager {
 			fetchConfigDataFromXml();
 
 		return configList.get(key);
+	}
+
+	public static String findMap(final String key) {
+		// 如果configList还没有数据（第一次），或者被回收了，那么（重新）加载xml
+		if (mapList == null || mapList.isEmpty())
+			fetchConfigDataFromXml();
+
+		return mapList.get(key);
 	}
 }
